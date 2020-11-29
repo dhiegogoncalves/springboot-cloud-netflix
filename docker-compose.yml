@@ -1,0 +1,73 @@
+version: '3.3'
+
+services:
+  db:
+    image: mariadb
+    container_name: springboot_microservices_mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: crud
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: docker      
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - data:/var/lib/mysql
+
+  db2:
+    image: mariadb
+    container_name: springboot_microservices_mariadb2
+    restart: always
+    environment:
+      MYSQL_DATABASE: pagamento
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: docker       
+    ports:
+      - 3307:3306
+    expose:
+      - 3307
+    volumes:
+      - data2:/var/lib/mysql
+
+  db3:
+    image: mariadb
+    container_name: springboot_microservices_mariadb3
+    restart: always
+    environment:
+      MYSQL_DATABASE: auth
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: docker       
+    ports:
+      - 3308:3306
+    expose:
+      - 3308
+    volumes:
+      - data3:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3.8.9-management
+    container_name: springboot_microservices_rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_ERLANG_COOKIE: secret_pass
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin     
+    ports:
+      - 5672:5672
+      - 15672:15672
+    expose:
+      - 5672
+      - 15672
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+
+volumes:
+  data: 
+  data2:
+  data3:
+  rabbitmq:
